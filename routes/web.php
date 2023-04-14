@@ -256,3 +256,25 @@ Route::get('/user/country', function(){
     }
 
 });
+
+// Polymorphic relations
+
+Route::get('user/photos', function(){
+
+    $user = User::find(1);
+
+    forEach($user->photos as $photo) {
+        return $photo;
+    }
+
+});
+
+Route::get('post/{id}/photos', function ($id){
+
+    $post = Post::find($id);
+
+    forEach($post->photos as $photo){
+        echo $photo . "<br>";
+    }
+
+});
