@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Country;
+use App\Models\Photo;
+use App\Models\Tag;
 // use App\Models\Role;
 
 /*
@@ -259,7 +261,7 @@ Route::get('/user/country', function(){
 
 // Polymorphic relations
 
-Route::get('user/photos', function(){
+Route::get('/user/photos', function(){
 
     $user = User::find(1);
 
@@ -269,12 +271,52 @@ Route::get('user/photos', function(){
 
 });
 
-Route::get('post/{id}/photos', function ($id){
+Route::get('/post/{id}/photos', function ($id){
 
     $post = Post::find($id);
 
     forEach($post->photos as $photo){
         echo $photo . "<br>";
+    }
+
+});
+
+Route::get('/photo/{id}/post', function($id){
+
+    $photo = Photo::findOrFail($id);
+    
+    return $photo->imageable;
+
+
+});
+
+Route::get('/post/tag', function (){
+
+    $post = Post::find(1);
+
+    forEach($post->tags as $tag){
+        echo $tag->name;
+    }
+
+});
+
+Route::get('/tag/post', function(){
+
+    $tag = Tag::find(2);
+
+
+    forEach($tag->posts as $post){
+        echo $post->title;
+    }
+
+});
+
+Route::get('/tag/video', function (){
+
+    $tag = Tag::find(1);
+
+    forEach($tag->videos as $video){
+        echo $video->name;
     }
 
 });
